@@ -1,0 +1,9 @@
+.turbo
+node_modules
+dist
+.DS_Store
+yarn.lock
+testsf
+.env
+elizadb
+.eliza
