@@ -8,6 +8,7 @@ export const testSuite: TestSuite[] = [
             {
                 name: 'search-andree',
                 fn: async (runtime: IAgentRuntime) => {
+                    console.log(JSON.stringify(runtime.character))
                     // const [{ id }] = await runtime.getAllWorlds();
                     // const roomId = await runtime.createRoom({
                     //     id: uuidv4() as UUID,
