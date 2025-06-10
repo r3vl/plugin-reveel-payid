@@ -1,6 +1,6 @@
 {
   "name": "@elizaos/plugin-reveel-payid",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -27,12 +27,13 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "eliza:test": "npx @elizaos/cli test",
-    "eliza:agent": "npx @elizaos/cli start"
+    "eliza:agent": "npx @elizaos/cli start --character ./src/character.json"
   },
   "dependencies": {
-    "@elizaos/cli": "1.0.6",
-    "@elizaos/core": "^1.0.6",
-    "@elizaos/plugin-bootstrap": "^1.0.6",
+    "@elizaos/cli": "1.0.7",
+    "@elizaos/core": "^1.0.7",
+    "@elizaos/plugin-0g": "^0.25.6-alpha.1",
+    "@elizaos/plugin-bootstrap": "^1.0.7",
     "@elizaos/plugin-openai": "^1.0.0",
     "@elizaos/plugin-reveel-payid": "github:r3vl/plugin-reveel-payid",
     "axios": "^1.9.0",
