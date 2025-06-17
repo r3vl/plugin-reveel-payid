@@ -387,7 +387,7 @@ export const initTransaction: Action = ({
                         "amount",
                         "token",
                         "network",
-                        "recipientPayId"
+                        "recipient"
                     ].some(key => !responseContentObj[key])
                 ) {
                     responseContent = {

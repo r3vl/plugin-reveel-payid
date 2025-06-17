@@ -74,246 +74,246 @@ export const testSuite: TestSuite[] = [
                     }
                 },
             },
-            // {
-            //     name: 'signin-with-fb',
-            //     fn: async (runtime: IAgentRuntime) => {
-            //         const message: Memory = {
-            //             entityId: uuidv4() as UUID,
-            //             roomId: uuidv4() as UUID,
-            //             content: {
-            //                 text: 'Sign in with email: fernando@r3vl.xyz',
-            //                 source: 'test',
-            //                 actions: ['SIGNIN_WITH_FB'],
-            //             },
-            //         };
+            {
+                name: 'signin-with-fb',
+                fn: async (runtime: IAgentRuntime) => {
+                    const message: Memory = {
+                        entityId: uuidv4() as UUID,
+                        roomId: uuidv4() as UUID,
+                        content: {
+                            text: 'Sign in with email: fernando@r3vl.xyz',
+                            source: 'test',
+                            actions: ['SIGNIN_WITH_FB'],
+                        },
+                    };
                     
-            //         const state: State = {
-            //             values: {},
-            //             data: {},
-            //             text: '',
-            //         };
-            //         let responseReceived = false;
+                    const state: State = {
+                        values: {},
+                        data: {},
+                        text: '',
+                    };
+                    let responseReceived = false;
                     
-            //         try {
-            //             await runtime.processActions(message, [], state, async (content: Content) => {
-            //                 if (content.actions?.includes('SIGNIN_WITH_FB')) {
-            //                     responseReceived = true;
-            //                 }
-            //                 return [];
-            //             });
+                    try {
+                        await runtime.processActions(message, [], state, async (content: Content) => {
+                            if (content.actions?.includes('SIGNIN_WITH_FB')) {
+                                responseReceived = true;
+                            }
+                            return [];
+                        });
                         
-            //             if (!responseReceived) {
-            //                 const searchPayIDAction = runtime.actions.find((a) => a.name === 'SIGNIN_WITH_FB');
+                        if (!responseReceived) {
+                            const searchPayIDAction = runtime.actions.find((a) => a.name === 'SIGNIN_WITH_FB');
                             
-            //                 if (searchPayIDAction) {
-            //                     await searchPayIDAction.handler(
-            //                         runtime,
-            //                         message,
-            //                         state,
-            //                         {},
-            //                         async (content: Content) => {                                        
-            //                             if (content.actions?.includes('SIGNIN_WITH_FB')) {
-            //                                 console.log("SIGNIN_WITH_FB_ACTION_RESPONSE:::", content)
+                            if (searchPayIDAction) {
+                                await searchPayIDAction.handler(
+                                    runtime,
+                                    message,
+                                    state,
+                                    {},
+                                    async (content: Content) => {                                        
+                                        if (content.actions?.includes('SIGNIN_WITH_FB')) {
+                                            console.log("SIGNIN_WITH_FB_ACTION_RESPONSE:::", content)
 
-            //                                 responseReceived = true;
-            //                             }
-            //                             return [];
-            //                         },
-            //                         []
-            //                     );
-            //                 } else {
-            //                     throw new Error('SIGNIN_WITH_FB action not found in runtime.actions');
-            //                 }
-            //             }
+                                            responseReceived = true;
+                                        }
+                                        return [];
+                                    },
+                                    []
+                                );
+                            } else {
+                                throw new Error('SIGNIN_WITH_FB action not found in runtime.actions');
+                            }
+                        }
                         
-            //             if (!responseReceived) {
-            //                 throw new Error('SIGNIN_WITH_FB action did not produce expected response');
-            //             }
-            //         } catch (error) {
-            //             throw new Error(`SIGNIN_WITH_FB action test failed: ${error.message}`);
-            //         }
-            //     },
-            // },
-            // {
-            //     name: 'register-andree@r3vl.xyz',
-            //     fn: async (runtime: IAgentRuntime) => {
-            //         const message: Memory = {
-            //             entityId: uuidv4() as UUID,
-            //             roomId: uuidv4() as UUID,
-            //             content: {
-            //                 text: 'register Pay(ID) user with email address: andree+77@r3vl.xyz',
-            //                 source: 'test',
-            //                 actions: ['REGISTER_PAYID_USER'],
-            //             },
-            //         };
+                        if (!responseReceived) {
+                            throw new Error('SIGNIN_WITH_FB action did not produce expected response');
+                        }
+                    } catch (error) {
+                        throw new Error(`SIGNIN_WITH_FB action test failed: ${error.message}`);
+                    }
+                },
+            },
+            {
+                name: 'register-andree@r3vl.xyz',
+                fn: async (runtime: IAgentRuntime) => {
+                    const message: Memory = {
+                        entityId: uuidv4() as UUID,
+                        roomId: uuidv4() as UUID,
+                        content: {
+                            text: 'register Pay(ID) user with email address: andree+77@r3vl.xyz',
+                            source: 'test',
+                            actions: ['REGISTER_PAYID_USER'],
+                        },
+                    };
                     
-            //         const state: State = {
-            //             values: {},
-            //             data: {},
-            //             text: '',
-            //         };
-            //         let responseReceived = false;
+                    const state: State = {
+                        values: {},
+                        data: {},
+                        text: '',
+                    };
+                    let responseReceived = false;
                     
-            //         try {
-            //             await runtime.processActions(message, [], state, async (content: Content) => {
-            //                 if (content.actions?.includes('REGISTER_PAYID_USER')) {
-            //                     responseReceived = true;
-            //                 }
-            //                 return [];
-            //             });
+                    try {
+                        await runtime.processActions(message, [], state, async (content: Content) => {
+                            if (content.actions?.includes('REGISTER_PAYID_USER')) {
+                                responseReceived = true;
+                            }
+                            return [];
+                        });
                         
-            //             if (!responseReceived) {
-            //                 const searchPayIDAction = runtime.actions.find((a) => a.name === 'REGISTER_PAYID_USER');
+                        if (!responseReceived) {
+                            const searchPayIDAction = runtime.actions.find((a) => a.name === 'REGISTER_PAYID_USER');
                             
-            //                 if (searchPayIDAction) {
-            //                     await searchPayIDAction.handler(
-            //                         runtime,
-            //                         message,
-            //                         state,
-            //                         {},
-            //                         async (content: Content) => {                                        
-            //                             if (content.actions?.includes('REGISTER_PAYID_USER')) {
-            //                                 console.log("REGISTER_PAYID_USER_ACTION_RESPONSE:::", content)
+                            if (searchPayIDAction) {
+                                await searchPayIDAction.handler(
+                                    runtime,
+                                    message,
+                                    state,
+                                    {},
+                                    async (content: Content) => {                                        
+                                        if (content.actions?.includes('REGISTER_PAYID_USER')) {
+                                            console.log("REGISTER_PAYID_USER_ACTION_RESPONSE:::", content)
 
-            //                                 responseReceived = true;
-            //                             }
-            //                             return [];
-            //                         },
-            //                         []
-            //                     );
-            //                 } else {
-            //                     throw new Error('REGISTER_PAYID_USER action not found in runtime.actions');
-            //                 }
-            //             }
+                                            responseReceived = true;
+                                        }
+                                        return [];
+                                    },
+                                    []
+                                );
+                            } else {
+                                throw new Error('REGISTER_PAYID_USER action not found in runtime.actions');
+                            }
+                        }
                         
-            //             if (!responseReceived) {
-            //                 throw new Error('REGISTER_PAYID_USER action did not produce expected response');
-            //             }
-            //         } catch (error) {
-            //             throw new Error(`REGISTER_PAYID_USER action test failed: ${error.message}`);
-            //         }
-            //     },
-            // },
-            // {
-            //     name: 'claim-andree',
-            //     fn: async (runtime: IAgentRuntime) => {
-            //         const message: Memory = {
-            //             entityId: uuidv4() as UUID,
-            //             roomId: uuidv4() as UUID,
-            //             content: {
-            //                 text: 'claim Pay(ID) andree with the current user id.',
-            //                 source: 'test',
-            //                 actions: ['CLAIM_PAYID'],
-            //             },
-            //         };
+                        if (!responseReceived) {
+                            throw new Error('REGISTER_PAYID_USER action did not produce expected response');
+                        }
+                    } catch (error) {
+                        throw new Error(`REGISTER_PAYID_USER action test failed: ${error.message}`);
+                    }
+                },
+            },
+            {
+                name: 'claim-andree',
+                fn: async (runtime: IAgentRuntime) => {
+                    const message: Memory = {
+                        entityId: uuidv4() as UUID,
+                        roomId: uuidv4() as UUID,
+                        content: {
+                            text: 'claim Pay(ID) andree with the current user id.',
+                            source: 'test',
+                            actions: ['CLAIM_PAYID'],
+                        },
+                    };
                     
-            //         const state: State = {
-            //             values: {},
-            //             data: {},
-            //             text: '',
-            //         };
-            //         let responseReceived = false;
+                    const state: State = {
+                        values: {},
+                        data: {},
+                        text: '',
+                    };
+                    let responseReceived = false;
                     
-            //         try {
-            //             await runtime.processActions(message, [], state, async (content: Content) => {
-            //                 if (content.actions?.includes('CLAIM_PAYID')) {
-            //                     responseReceived = true;
-            //                 }
-            //                 return [];
-            //             });
+                    try {
+                        await runtime.processActions(message, [], state, async (content: Content) => {
+                            if (content.actions?.includes('CLAIM_PAYID')) {
+                                responseReceived = true;
+                            }
+                            return [];
+                        });
                         
-            //             if (!responseReceived) {
-            //                 const searchPayIDAction = runtime.actions.find((a) => a.name === 'CLAIM_PAYID');
+                        if (!responseReceived) {
+                            const searchPayIDAction = runtime.actions.find((a) => a.name === 'CLAIM_PAYID');
                             
-            //                 if (searchPayIDAction) {
-            //                     await searchPayIDAction.handler(
-            //                         runtime,
-            //                         message,
-            //                         state,
-            //                         {},
-            //                         async (content: Content) => {                                        
-            //                             if (content.actions?.includes('CLAIM_PAYID')) {
-            //                                 console.log("CLAIM_PAYID_ACTION_RESPONSE:::", content)
+                            if (searchPayIDAction) {
+                                await searchPayIDAction.handler(
+                                    runtime,
+                                    message,
+                                    state,
+                                    {},
+                                    async (content: Content) => {                                        
+                                        if (content.actions?.includes('CLAIM_PAYID')) {
+                                            console.log("CLAIM_PAYID_ACTION_RESPONSE:::", content)
 
-            //                                 responseReceived = true;
-            //                             }
-            //                             return [];
-            //                         },
-            //                         []
-            //                     );
-            //                 } else {
-            //                     throw new Error('CLAIM_PAYID action not found in runtime.actions');
-            //                 }
-            //             }
+                                            responseReceived = true;
+                                        }
+                                        return [];
+                                    },
+                                    []
+                                );
+                            } else {
+                                throw new Error('CLAIM_PAYID action not found in runtime.actions');
+                            }
+                        }
                         
-            //             if (!responseReceived) {
-            //                 throw new Error('CLAIM_PAYID action did not produce expected response');
-            //             }
-            //         } catch (error) {
-            //             throw new Error(`CLAIM_PAYID action test failed: ${error.message}`);
-            //         }
-            //     },
-            // },
-            // {
-            //     name: 'init-tx',
-            //     fn: async (runtime: IAgentRuntime) => {
-            //         const message: Memory = {
-            //             entityId: uuidv4() as UUID,
-            //             roomId: uuidv4() as UUID,
-            //             content: {
-            //                 text: 'Send 69 USDC from current user to Pay(ID) andree on the BASE network.',
-            //                 source: 'test',
-            //                 actions: ['SEND_TX_PAYID'],
-            //             },
-            //         };
+                        if (!responseReceived) {
+                            throw new Error('CLAIM_PAYID action did not produce expected response');
+                        }
+                    } catch (error) {
+                        throw new Error(`CLAIM_PAYID action test failed: ${error.message}`);
+                    }
+                },
+            },
+            {
+                name: 'init-tx',
+                fn: async (runtime: IAgentRuntime) => {
+                    const message: Memory = {
+                        entityId: uuidv4() as UUID,
+                        roomId: uuidv4() as UUID,
+                        content: {
+                            text: 'Send 69 USDC from current user to Pay(ID) andree on the BASE network.',
+                            source: 'test',
+                            actions: ['SEND_TX_PAYID'],
+                        },
+                    };
                     
-            //         const state: State = {
-            //             values: {},
-            //             data: {},
-            //             text: '',
-            //         };
-            //         let responseReceived = false;
+                    const state: State = {
+                        values: {},
+                        data: {},
+                        text: '',
+                    };
+                    let responseReceived = false;
                     
-            //         try {
-            //             await runtime.processActions(message, [], state, async (content: Content) => {
-            //                 if (content.actions?.includes('SEND_TX_PAYID')) {
-            //                     responseReceived = true;
-            //                 }
-            //                 return [];
-            //             });
+                    try {
+                        await runtime.processActions(message, [], state, async (content: Content) => {
+                            if (content.actions?.includes('SEND_TX_PAYID')) {
+                                responseReceived = true;
+                            }
+                            return [];
+                        });
                         
-            //             if (!responseReceived) {
-            //                 const searchPayIDAction = runtime.actions.find((a) => a.name === 'SEND_TX_PAYID');
+                        if (!responseReceived) {
+                            const searchPayIDAction = runtime.actions.find((a) => a.name === 'SEND_TX_PAYID');
                             
-            //                 if (searchPayIDAction) {
-            //                     await searchPayIDAction.handler(
-            //                         runtime,
-            //                         message,
-            //                         state,
-            //                         {},
-            //                         async (content: Content) => {                                        
-            //                             if (content.actions?.includes('SEND_TX_PAYID')) {
-            //                                 console.log("SEND_TX_PAYID_ACTION_RESPONSE:::", content)
+                            if (searchPayIDAction) {
+                                await searchPayIDAction.handler(
+                                    runtime,
+                                    message,
+                                    state,
+                                    {},
+                                    async (content: Content) => {                                        
+                                        if (content.actions?.includes('SEND_TX_PAYID')) {
+                                            console.log("SEND_TX_PAYID_ACTION_RESPONSE:::", content)
 
-            //                                 responseReceived = true;
-            //                             }
-            //                             return [];
-            //                         },
-            //                         []
-            //                     );
-            //                 } else {
-            //                     throw new Error('SEND_TX_PAYID action not found in runtime.actions');
-            //                 }
-            //             }
+                                            responseReceived = true;
+                                        }
+                                        return [];
+                                    },
+                                    []
+                                );
+                            } else {
+                                throw new Error('SEND_TX_PAYID action not found in runtime.actions');
+                            }
+                        }
                         
-            //             if (!responseReceived) {
-            //                 throw new Error('SEND_TX_PAYID action did not produce expected response');
-            //             }
-            //         } catch (error) {
-            //             throw new Error(`SEND_TX_PAYID action test failed: ${error.message}`);
-            //         }
-            //     },
-            // },
+                        if (!responseReceived) {
+                            throw new Error('SEND_TX_PAYID action did not produce expected response');
+                        }
+                    } catch (error) {
+                        throw new Error(`SEND_TX_PAYID action test failed: ${error.message}`);
+                    }
+                },
+            },
             // {
             //     name: 'get-pay-id-routes',
             //     fn: async (runtime: IAgentRuntime) => {

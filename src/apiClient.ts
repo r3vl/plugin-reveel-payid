@@ -155,6 +155,7 @@ export class PayIDService {
             }
 
             const response = await this.client.post('/reveel/api/transactions', payload);
+            console.log("REQUEST:::", response)
 
             const { data } = response.data;
             
