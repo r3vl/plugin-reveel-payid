@@ -1,6 +1,6 @@
 {
   "name": "@elizaos/plugin-reveel-payid",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -30,12 +30,11 @@
     "eliza:agent": "set LOG_LEVEL=debug && npx @elizaos/cli start --character ./src/character.json"
   },
   "dependencies": {
-    "@elizaos/cli": "1.0.8",
-    "@elizaos/core": "^1.0.8",
+    "@elizaos/cli": "1.0.9",
+    "@elizaos/core": "^1.0.9",
     "@elizaos/plugin-0g": "^0.25.6-alpha.1",
-    "@elizaos/plugin-bootstrap": "^1.0.8",
+    "@elizaos/plugin-bootstrap": "^1.0.9",
     "@elizaos/plugin-openai": "^1.0.0",
-    "@elizaos/plugin-reveel-payid": "github:r3vl/plugin-reveel-payid",
     "axios": "^1.9.0",
     "firebase": "^11.7.3",
     "firebase-admin": "^13.4.0",

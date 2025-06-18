@@ -123,7 +123,7 @@ export const signInWithFB: Action = ({
             signInLink = await s.signIn(email.trim());
 
             responseContent = {
-                text: `Please confirm sign in of ${email} in the following link: ${signInLink}.`,
+                text: `Please confirm sign in of ${email} in the following [link](${signInLink}).`,
                 actions: ['SIGNIN_WITH_FB']
             };
         } catch {
@@ -134,6 +134,17 @@ export const signInWithFB: Action = ({
         }
 
         await callback?.(responseContent);
+
+        await Promise.resolve(new Promise(async (resolve) => {
+            runtime.registerEvent('SIGNIN_WITH_FB_SUCCESS', async () => {
+                resolve(true);
+            })
+        }))
+
+        await callback?.({
+            text: `Sign in successful.`,
+            actions: ['REPLY']
+        });
 
         return true;
     },
@@ -151,6 +162,71 @@ export const signInWithFB: Action = ({
                     text: "Please confirm sign in of fernando@r3vl.xyz in the following link: https://reveel.id/auth.",
                 },
                 actions: ['SIGNIN_WITH_FB']
+            }
+        ],
+    ] as ActionExample[][],
+})
+
+// Action to claim a PayID
+export const getCurrentUser: Action = ({
+    name: 'GET_CURRENT_USER',
+    similes: ['RETREIVE_CURRENT_USER'],
+    description: 'Returns the current user',
+    validate: async () => true,
+    handler: async (
+        runtime: IAgentRuntime,
+        message: Memory,
+        state: State,
+        _options,
+        callback
+    ) => {
+        try {
+            state = await runtime.composeState(message, [
+                ...(message.content.providers ?? []),
+                'RECENT_MESSAGES',
+            ]);
+
+            const s = new PayIDService(runtime);
+
+            let responseContent
+
+            try {
+                const user = await s.getCurrentUser();
+
+                responseContent = {
+                   text: JSON.stringify(user),
+                   actions: ['GET_CURRENT_USER']
+               };
+            } catch {
+                responseContent = {
+                   text: `Error retrieving current user.`,
+                   actions: ['REPLY']
+                }
+            }
+
+            await callback?.(responseContent);
+
+            return true;
+        } catch (error) {
+            console.log(error);
+
+            return false;
+        }
+    },
+    examples: [
+        [
+            {
+                name: "{{user1}}",
+                content: {
+                    text: "get current user.",
+                },
+            },
+            {
+                name: "{{user2}}",
+                content: {
+                    text: `{"message": "User retrieved successfully"}`,
+                },
+                actions: ['GET_CURRENT_USER']
             }
         ],
     ] as ActionExample[][],
@@ -387,7 +463,7 @@ export const initTransaction: Action = ({
                         "amount",
                         "token",
                         "network",
-                        "recipientPayId"
+                        "recipient"
                     ].some(key => !responseContentObj[key])
                 ) {
                     responseContent = {
@@ -415,7 +491,9 @@ export const initTransaction: Action = ({
                         actions: ['SEND_TX_PAYID']
                     };
                 }
-            } catch {
+            } catch (_e) {
+                console.log("-----", _e);
+
                 responseContent = {
                     text: `Error sending funds to Pay(ID) ${responseContentObj.recipient}.`,
                     actions: ['REPLY']
@@ -625,6 +703,7 @@ export const getRoutes: Action = ({
                             Pay(ID) routes for current user:\n\n
                             ${routes.map((route) => `
                                 - Name: ${route.name}, 
+                                ID: ${route.id},
                                 Incoming tokens: ${route.incomingTokens.join(', ')},
                                 Incoming networks: ${route.incomingNetworks.join(', ')},
                                 Incoming wallets: ${route.incomingWallets.join(', ')},

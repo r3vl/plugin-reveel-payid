@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, http, parseUnits } from 'viem'
+import { createPublicClient, createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { mainnet, polygon, bsc, base, optimism } from 'viem/chains'
 
@@ -29,7 +29,7 @@ const chainInstanceMapper = {
 const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`) 
 
 const client = (_chain: keyof typeof chainsMapper) => {
-    const chain = chainInstanceMapper[_chain]
+    const chain = chainInstanceMapper[chainsMapper[_chain]]
 
     return {
         walletClient: createWalletClient({
@@ -46,7 +46,9 @@ const client = (_chain: keyof typeof chainsMapper) => {
 export const sendTx = async (chain: keyof typeof chainsMapper, tx: any) => {
     const { walletClient, publicClient } = client(chain)
 
-    const hash = await walletClient.sendTransaction(tx)
+    const hash = await walletClient.sendTransaction(JSON.parse(JSON.stringify(tx), (_, t) => {
+        return typeof t == "string" && /^-?\d+n$/.test(t) ? BigInt(t.slice(0, -1)) : t
+    }))
 
     await publicClient.waitForTransactionReceipt({ hash })
     

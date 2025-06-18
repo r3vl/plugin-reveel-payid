@@ -108,7 +108,19 @@ export class PayIDService {
             return true
         }
     }
-    
+
+    async getCurrentUser() {
+        try {
+            const { data } = await this.client.get(`/reveel/api/users/user1`);
+            
+            return data.user;
+        } catch (error) {
+            // throw new Error(`Failed to get PayID: ${error.message}`);
+            
+            return null
+        }
+    }
+
     /**
     * Search for PayIDs
     */
@@ -155,6 +167,7 @@ export class PayIDService {
             }
 
             const response = await this.client.post('/reveel/api/transactions', payload);
+            console.log("REQUEST:::", response.data)
 
             const { data } = response.data;
             
@@ -179,12 +192,14 @@ export class PayIDService {
                 incomingWallets: params.incomingWallets || [],
                 swapNetwork: params.swapNetwork || null,
                 swapToken: params.swapToken || null,
-                outgoingWallet: params.outgoingWallet
+                outgoingWallet: "0x9c02cBF68E61591A2d8f05dF3318e244768f7ec0"
             });
             
             const { data } = response.data;
             return data.route;
         } catch (error) {
+            console.log("||||", JSON.stringify(error.response.data))
+
             throw new Error(`Failed to create route: ${error.message}`);
         }
     }
