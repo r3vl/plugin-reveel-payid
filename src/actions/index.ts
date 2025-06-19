@@ -2,6 +2,7 @@ import {
     Action,
     ActionExample,
     composePromptFromState,
+    Content,
     findEntityByName,
     IAgentRuntime,
     Memory,
@@ -117,7 +118,7 @@ export const signInWithFB: Action = ({
         const s = new PayIDService(runtime);
 
         let signInLink
-        let responseContent
+        let responseContent: Content
 
         try {
             signInLink = await s.signIn(email.trim());
@@ -890,13 +891,12 @@ export const getTransactionHistory: Action = ({
                     responseContent = {
                         text: `
                             Transaction history for current user:\n\n
-                            ${activities.map((activity) => `
-                                - Tx hash: ${activity.hash}, 
-                                - Type: ${activity.type}, 
-                                - Amount: ${activity.amount}, 
-                                - Token: ${activity.incomingToken}, 
-                                - Network: ${activity.incomingNetwork}, 
-                                - Timestamp: ${activity.createdAt}`).join('\n')}
+                            ---------------------------------------------------------------------\n
+                            |  tx hash  |  amount  |  token  |  network  |  timestamp  |
+                            ${activities.map((activity) =>
+                            `${activity.hash.slice(0, 8)},${activity.amount},${activity.incomingToken},${activity.incomingNetwork},${activity.createdAt}`).join('\n')}
+                        
+                            
                         `,
                         actions: ['GET_USER_TX_HISTORY']
                     };
@@ -931,6 +931,64 @@ export const getTransactionHistory: Action = ({
                     text: "Transaction history for current user.",
                 },
                 actions: ['GET_USER_TX_HISTORY']
+            }
+        ],
+    ] as ActionExample[][],
+})
+
+export const getSupportedTokensAction: Action = ({
+    name: 'GET_SUPPORTED_TOKENS',
+    similes: ['GET_SUPPORTED_NETWORKS'],
+    description: 'get supported tokens and networks by Pay(ID)',
+    validate: async () => true,
+    handler: async (
+        runtime: IAgentRuntime,
+        message: Memory,
+        state: State,
+        _options,
+        callback
+    ) => {
+        try {
+            state = await runtime.composeState(message, [
+                ...(message.content.providers ?? []),
+                'RECENT_MESSAGES',
+            ]);
+            
+            const responseContent = {
+                text: `
+                    Supported tokens:\n\n
+                    - ${getSupportedTokens().join(', ')}
+                    
+                    Supported networks:\n\n
+                    - ${getSupportedNetworks().join(', ')}
+                `,
+                actions: ['GET_SUPPORTED_TOKENS']
+            };
+                
+
+            await callback?.(responseContent);
+
+            return true;
+        } catch (error) {
+            console.log(error);
+
+            return false;
+        }
+    },
+    examples: [
+        [
+            {
+                name: "{{user1}}",
+                content: {
+                    text: "what are the supported tokens and networks?",
+                },
+            },
+            {
+                name: "{{user2}}",
+                content: {
+                    text: "Transaction history for current user.",
+                },
+                actions: ['GET_SUPPORTED_TOKENS']
             }
         ],
     ] as ActionExample[][],

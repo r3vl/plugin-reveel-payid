@@ -1,4 +1,4 @@
-import { GenerateTextParams, ModelType, type Plugin } from "@elizaos/core";
+import { type Plugin } from "@elizaos/core";
 import { searchPayID } from "./provider";
 import {
     searchPayIds,
@@ -11,6 +11,7 @@ import {
     getTransactionHistory,
     signInWithFB,
     getCurrentUser,
+    getSupportedTokensAction,
 //     checkRouteConflicts
 } from "./actions";
 import { testSuite } from "./tests";
@@ -35,6 +36,7 @@ export const payIDPlugin: Plugin = {
         initTransaction,
         deleteRoute,
         getTransactionHistory,
+        getSupportedTokensAction
         // checkRouteConflicts
     ],
     init: async () => {
