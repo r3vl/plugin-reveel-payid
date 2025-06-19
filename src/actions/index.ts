@@ -896,7 +896,12 @@ export const getTransactionHistory: Action = ({
                             ${activities.map((activity) =>
                             `${activity.hash.slice(0, 8)},${activity.amount},${activity.incomingToken},${activity.incomingNetwork},${activity.createdAt}`).join('\n')}
                         
-                            
+
+                            ---------------------------------------------------------------------
+
+                            You can download the transaction history as a CSV file by following this link:
+
+                            http://localhost:3000/api/tx-history
                         `,
                         actions: ['GET_USER_TX_HISTORY']
                     };

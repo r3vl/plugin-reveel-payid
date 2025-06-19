@@ -15,7 +15,7 @@ import {
 //     checkRouteConflicts
 } from "./actions";
 import { testSuite } from "./tests";
-import { signInCallback } from "./api";
+import { getTxHistoryCSV, signInCallback } from "./api";
 
 export const payIDPlugin: Plugin = {
     name: "plugin-payid",
@@ -23,7 +23,7 @@ export const payIDPlugin: Plugin = {
     providers: [searchPayID],
     evaluators: [],
     services: [],
-    routes: [signInCallback],
+    routes: [signInCallback, getTxHistoryCSV],
     tests: [...testSuite],
     actions: [
         searchPayIds,
