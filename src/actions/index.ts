@@ -478,8 +478,23 @@ export const initTransaction: Action = ({
                         network: responseContentObj.network,
                         recipientPayId: responseContentObj.recipient
                     });
+
+                    if (response.approveTx) {
+                        await sendTx(responseContentObj.network, response.approveTx)
+                    }
     
-                    const hash = await sendTx(responseContentObj.network, response.tx)
+                    const { hash, waitReceiptPromise } = await sendTx(responseContentObj.network, response.tx)
+
+                    await callback?.({
+                        text: `
+                            Transaction initialized successfully:
+        
+                            Transaction hash: ${hash}
+                        `,
+                        actions: ['REPLY']
+                    });
+
+                    await waitReceiptPromise
     
                     responseContent = {
                         text: `
@@ -862,25 +877,25 @@ export const getTransactionHistory: Action = ({
                 'RECENT_MESSAGES',
             ]);
 
-            // const searchPayIDTemplate = `
-            //     ${message.content.text}.
+            const pageNumberTemplate = `
+                ${message.content.text}.
 
-            //     from the text above, return in one word the user id.
-            // `
+                from the text above, return in one word the number of page user wants to see, return null if no page number is found.
+            `
 
-            // const text = await runtime.useModel(ModelType.TEXT_SMALL, {
-            //     prompt: composePromptFromState({
-            //       state,
-            //       template: searchPayIDTemplate,
-            //     }),
-            // });
+            const pageNumber = await runtime.useModel(ModelType.TEXT_SMALL, {
+                prompt: composePromptFromState({
+                  state,
+                  template: pageNumberTemplate,
+                }),
+            }) as number;
 
             const s = new PayIDService(runtime);
             
             let responseContent
 
             try {
-                const { activities } = await s.getTransactionHistory();
+                const { activities } = await s.getTransactionHistory(pageNumber);
 
                 if (activities.length === 0) {
                     responseContent = {

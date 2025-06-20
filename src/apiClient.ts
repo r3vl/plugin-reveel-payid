@@ -192,7 +192,7 @@ export class PayIDService {
                 incomingWallets: params.incomingWallets || [],
                 swapNetwork: params.swapNetwork || null,
                 swapToken: params.swapToken || null,
-                outgoingWallet: "0x9c02cBF68E61591A2d8f05dF3318e244768f7ec0"
+                outgoingWallet: process.env.WALLET_ADDRESS
             });
             
             const { data } = response.data;
@@ -233,7 +233,7 @@ export class PayIDService {
     /**
     * Get transaction history for a user
     */
-    async getTransactionHistory(page?: number, pageSize?: number): Promise<{activities: TransactionActivity[], pagination: any}> {
+    async getTransactionHistory(page: number = 1, pageSize: number = 5): Promise<{activities: TransactionActivity[], pagination: any}> {
         try {
             const { data } = await this.client.get(`/reveel/api/transactions/users/user1/activities`, {
                 params: {

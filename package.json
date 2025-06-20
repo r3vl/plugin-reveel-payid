@@ -1,6 +1,6 @@
 {
   "name": "@elizaos/plugin-reveel-payid",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -63,6 +63,14 @@
       "REVEEL_PAYID_BASE_URL": {
         "type": "string",
         "description": "REVEEL_PAYID_BASE_URL"
+      },
+      "INFURA_API_KEY": {
+        "type": "string",
+        "description": "INFURA_API_KEY"
+      },
+      "WALLET_ADDRESS": {
+        "type": "string",
+        "description": "WALLET_ADDRESS"
       }
     }
   },
