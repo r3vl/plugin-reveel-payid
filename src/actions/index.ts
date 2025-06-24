@@ -10,6 +10,7 @@ import {
     parseJSONObjectFromText,
     State
 } from '@elizaos/core';
+import { type EstimateGasExecutionErrorType } from 'viem'
 import { PayIDService } from '../apiClient';
 import { getSupportedNetworks, getSupportedTokens } from '../utils';
 import { SupportedNetwork, SupportedToken } from '../types';
@@ -509,9 +510,15 @@ export const initTransaction: Action = ({
                 }
             } catch (_e) {
                 console.log("-----", _e);
+                const __e = _e as EstimateGasExecutionErrorType
 
                 responseContent = {
-                    text: `Error sending funds to Pay(ID) ${responseContentObj.recipient}.`,
+                    text: `
+                    
+                    Error sending funds to Pay(ID) ${responseContentObj.recipient}.
+
+                    ${__e.shortMessage && `Reason: ${__e.shortMessage}`}
+                    `,
                     actions: ['REPLY']
                 }
             }
